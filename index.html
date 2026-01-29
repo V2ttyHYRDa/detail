@@ -534,5 +534,47 @@
     </a>
 
     <script src="script.js"></script>
+    
+    <!-- Hellfire Cursor Trail -->
+    <script>
+        (function() {
+            // Only enable on desktop devices for performance
+            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+            
+            let lastTime = 0;
+            const throttleDelay = 15; // Spawn particle every 15ms max
+            
+            document.addEventListener('mousemove', function(e) {
+                const now = Date.now();
+                
+                // Throttle to improve performance
+                if (now - lastTime < throttleDelay) return;
+                lastTime = now;
+                
+                // Random chance to spawn (creates natural spacing)
+                if (Math.random() < 0.3) return;
+                
+                // Create flame particle
+                const flame = document.createElement('div');
+                flame.className = 'flame-particle';
+                
+                // Position at cursor
+                flame.style.left = e.clientX + 'px';
+                flame.style.top = e.clientY + 'px';
+                
+                // Random horizontal drift for smoke effect
+                const randomX = (Math.random() - 0.5) * 60; // -30 to +30px drift
+                flame.style.setProperty('--tx', randomX + 'px');
+                
+                // Add to DOM
+                document.body.appendChild(flame);
+                
+                // Auto-cleanup after animation completes
+                setTimeout(() => {
+                    flame.remove();
+                }, 1200);
+            });
+        })();
+    </script>
 </body>
 </html>

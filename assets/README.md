@@ -1,16 +1,24 @@
 # Detail Suds - Asset Preparation Guide
 
-## 📸 Required Images
+## 📸 Required Images & Videos
 
-Place optimized `.webp` images in this directory with the following specifications:
+Place optimized media files in this directory with the following specifications:
 
-### Hero Section
-**File:** `hero-detailing.webp`
+### Hero Section Video (Primary)
+**File:** `hero-showcase.mp4`
+- **Dimensions:** 1080×1350px or 1200×1500px (portrait 4:5 or 600×700 scaled)
+- **Duration:** 10-30 seconds, looping
+- **Content:** Car detailing process, ceramic coating application, before/after shots
+- **Format:** MP4 (H.264 codec)
+- **Compression:** Medium quality, target 2-5MB
+- **Usage:** Auto-playing hero video with red play button overlay
+
+**Fallback Image:** `hero-poster.jpg` or `hero-detailing.webp`
 - **Dimensions:** 600×700px (portrait orientation)
 - **Content:** High-end car being detailed/coated
 - **Style:** Premium, clean, well-lit
 - **Compression:** Medium quality (70-80%)
-- **Usage:** Main hero card with floating effect
+- **Usage:** Video poster/fallback for slow connections
 
 ### Showcase Carousel (Before/After)
 **Files:** `showcase-1-before.webp` through `showcase-4-before.webp`
@@ -66,10 +74,12 @@ for file in *.jpg; do cwebp -q 80 "$file" -o "${file%.jpg}.webp"; done
 
 ---
 
-## 📐 Image Specifications Summary
+## 📐 Media Specifications Summary
 
 | File Name | Dimensions | Aspect Ratio | Format | Quality | Max Size |
 |-----------|-----------|--------------|--------|---------|----------|
+| hero-showcase.mp4 | 1080×1350 | 4:5 | MP4 | Medium | 2-5MB |
+| hero-poster.jpg | 600×700 | 6:7 | JPG/WebP | 70-80% | 150KB |
 | hero-detailing.webp | 600×700 | 6:7 | WebP | 70-80% | 150KB |
 | showcase-1-before.webp | 1200×675 | 16:9 | WebP | 70-80% | 200KB |
 | showcase-2-before.webp | 1200×675 | 16:9 | WebP | 70-80% | 200KB |
@@ -79,16 +89,18 @@ for file in *.jpg; do cwebp -q 80 "$file" -o "${file%.jpg}.webp"; done
 
 ---
 
-## 🎨 Photography Tips
+### Photography & Videography Tips
 
 ### For Best Results:
 1. **Lighting:** Natural daylight or professional studio lighting
 2. **Background:** Clean, minimal distractions (dark/neutral preferred)
 3. **Angles:** 
-   - Hero: 45° angle showing process/detail
+   - Hero Video: 45° angle showing process/detail, slow pans, close-ups
    - Showcase: Side profiles, close-ups of gloss/reflection
 4. **Focus:** Sharp focus on vehicle details (paint, gloss, reflections)
 5. **Color Balance:** Accurate representation of coating results
+6. **Video Motion:** Smooth, stabilized footage (use gimbal or tripod)
+7. **Brand Colors:** Red accent theme (#E63946) - use in overlays or branding
 
 ### Before/After Shots:
 - Use **same angle and lighting** for consistency

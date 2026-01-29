@@ -126,13 +126,12 @@
                 <p class="hero__trust">Ceramic Coating, PPF & Premium Detailing in Lucknow</p>
             </div>
             <div class="hero__right">
-                <div class="hero__card">
-                    <img src="/assets/hero-detailing.webp" alt="Luxury car receiving premium ceramic coating at Detail Suds Lucknow" class="hero__image" width="600" height="700">
-                    <button class="hero__play-btn" aria-label="Watch showcase video">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 5.14v13.72L19 12L8 5.14z" fill="currentColor"/>
-                        </svg>
-                    </button>
+                <div class="hero__card hero-image-container">
+                    <video autoplay muted loop playsinline poster="assets/hero-poster.jpg" class="hero-video">
+                        <source src="assets/hero-showcase.mp4" type="video/mp4">
+                        <img src="assets/hero-detailing.webp" alt="Premium Car Detailing in Lucknow">
+                    </video>
+                    <div class="play-overlay"></div>
                 </div>
             </div>
         </div>

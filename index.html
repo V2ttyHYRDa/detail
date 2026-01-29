@@ -535,44 +535,99 @@
 
     <script src="script.js"></script>
     
-    <!-- Hellfire Cursor Trail -->
+    <!-- Living Fireball Cursor -->
     <script>
         (function() {
-            // Only enable on desktop devices for performance
+            // Only enable on desktop devices
             if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
             
-            let lastTime = 0;
-            const throttleDelay = 15; // Spawn particle every 15ms max
+            // 1. Create the Main Fireball Cursor Element
+            const cursor = document.createElement('div');
+            cursor.className = 'fireball-cursor';
+            document.body.appendChild(cursor);
             
-            document.addEventListener('mousemove', function(e) {
+            let mouseX = 0, mouseY = 0;
+            let cursorX = 0, cursorY = 0;
+            
+            // 2. Smooth cursor movement (lerp for fluid motion)
+            function updateCursor() {
+                const speed = 0.15; // Lower = smoother but more lag
+                cursorX += (mouseX - cursorX) * speed;
+                cursorY += (mouseY - cursorY) * speed;
+                
+                cursor.style.left = cursorX + 'px';
+                cursor.style.top = cursorY + 'px';
+                
+                requestAnimationFrame(updateCursor);
+            }
+            updateCursor();
+            
+            // 3. Track Mouse Movement
+            let lastFumeTime = 0;
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                
+                // Spawn smoke trail particles (throttled)
                 const now = Date.now();
+                if (now - lastFumeTime > 30) { // Every 30ms
+                    lastFumeTime = now;
+                    
+                    if (Math.random() < 0.5) { // 50% spawn chance
+                        const fume = document.createElement('div');
+                        fume.className = 'fume-particle';
+                        
+                        fume.style.left = e.clientX + 'px';
+                        fume.style.top = e.clientY + 'px';
+                        
+                        // Random drift in all directions (smoke dispersal)
+                        const randomX = (Math.random() - 0.5) * 50;
+                        const randomY = (Math.random() - 0.5) * 50 - 30; // Slight upward bias
+                        const randomRot = (Math.random() - 0.5) * 180;
+                        
+                        fume.style.setProperty('--tx', randomX + 'px');
+                        fume.style.setProperty('--ty', randomY + 'px');
+                        fume.style.setProperty('--rot', randomRot + 'deg');
+                        
+                        document.body.appendChild(fume);
+                        
+                        setTimeout(() => fume.remove(), 900);
+                    }
+                }
+            });
+            
+            // 4. Click Effect (Explosion/Flash)
+            document.addEventListener('mousedown', (e) => {
+                // Shrink and brighten
+                cursor.style.transform = 'translate(-50%, -50%) scale(0.7)';
+                cursor.style.background = 'radial-gradient(circle, #ffffff 0%, #ff0080 50%, #E63946 100%)';
+                cursor.style.boxShadow = '0 0 30px #fff, 0 0 50px #E63946, 0 0 80px rgba(230, 57, 70, 0.8)';
                 
-                // Throttle to improve performance
-                if (now - lastTime < throttleDelay) return;
-                lastTime = now;
+                // Create ripple effect
+                const ripple = document.createElement('div');
+                ripple.className = 'click-ripple';
+                ripple.style.left = e.clientX + 'px';
+                ripple.style.top = e.clientY + 'px';
+                ripple.style.transform = 'translate(-50%, -50%)';
+                document.body.appendChild(ripple);
                 
-                // Random chance to spawn (creates natural spacing)
-                if (Math.random() < 0.3) return;
-                
-                // Create flame particle
-                const flame = document.createElement('div');
-                flame.className = 'flame-particle';
-                
-                // Position at cursor
-                flame.style.left = e.clientX + 'px';
-                flame.style.top = e.clientY + 'px';
-                
-                // Random horizontal drift for smoke effect
-                const randomX = (Math.random() - 0.5) * 60; // -30 to +30px drift
-                flame.style.setProperty('--tx', randomX + 'px');
-                
-                // Add to DOM
-                document.body.appendChild(flame);
-                
-                // Auto-cleanup after animation completes
-                setTimeout(() => {
-                    flame.remove();
-                }, 1200);
+                setTimeout(() => ripple.remove(), 600);
+            });
+            
+            document.addEventListener('mouseup', () => {
+                // Reset to normal
+                cursor.style.transform = '';
+                cursor.style.background = '';
+                cursor.style.boxShadow = '';
+            });
+            
+            // 5. Hide cursor when leaving window
+            document.addEventListener('mouseleave', () => {
+                cursor.style.opacity = '0';
+            });
+            
+            document.addEventListener('mouseenter', () => {
+                cursor.style.opacity = '1';
             });
         })();
     </script>
